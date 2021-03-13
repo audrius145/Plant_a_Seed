@@ -22,6 +22,7 @@ Should have:
 7. As a user I should be able to group my plants by rooms
 
 Could have:
+
 8. As a user I should be able to access information about different plant species (from API possibly)
 9. As a user I should be able to document plant species
 10. As a user I should be able to share my plants progress in other medias.
