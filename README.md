@@ -8,7 +8,7 @@ so this is something that would be very useful to me and for people who feel the
 
 MoSCoW requirements:
 
-Must have :
+Must have:
 
 1. As a user I should be able to log in, so I can have a personalized account.
 2. As a user I should be able to create a plant profile
@@ -21,8 +21,8 @@ Should have:
 6. As a user I should be able to receive notifications whenever my plant needs to be watered again.
 7. As a user I should be able to group my plants by rooms
 
-Could have :
-8. As a user I should be able to access information about different plant species // (from API possibly)
+Could have:
+8. As a user I should be able to access information about different plant species (from API possibly)
 9. As a user I should be able to document plant species
 10. As a user I should be able to share my plants progress in other medias.
 
