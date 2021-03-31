@@ -7,11 +7,33 @@
 
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.example.plantaseed.MainActivity"
+        android:name="com.example.plantaseed.View.MainActivity"
         android:label="MainActivity" />
     <fragment
-        android:id="@+id/fragnment_main"
-        android:name="com.example.plantaseed.MainFragment"
-        android:label="fragment_fragnment_main"
-        tools:layout="@layout/fragment_main" />
+        android:id="@+id/homeFragment"
+        android:name="com.example.plantaseed.View.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.plantaseed.View.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" >
+        <action
+            android:id="@+id/action_infoFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/plantsFragment"
+        android:name="com.example.plantaseed.View.PlantsFragment"
+        android:label="fragment_plants"
+        tools:layout="@layout/fragment_plants" >
+        <action
+            android:id="@+id/action_plantsFragment_to_mainActivity2"
+            app:destination="@id/mainActivity" />
+    </fragment>
 </navigation>
