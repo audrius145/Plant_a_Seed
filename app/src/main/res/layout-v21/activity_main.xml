@@ -29,6 +29,7 @@
                 android:textColor="@color/greenvar1"
                 android:fontFamily="cursive"
                 android:textSize="30sp"
+                android:letterSpacing="0.2"
                 />
         </androidx.appcompat.widget.Toolbar>
 
