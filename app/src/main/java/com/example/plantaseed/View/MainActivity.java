@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         bottomNavigationView = findViewById(R.id.bottomnav);
         toolbar = findViewById(R.id.toolbar);
+
     }
 
 
