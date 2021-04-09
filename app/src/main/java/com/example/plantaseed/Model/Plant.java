@@ -1,34 +1,32 @@
 package com.example.plantaseed.Model;
 
-public class Plant {
-    private String name;
-    private String scientificName;
-    private String opinion;
-    private String imageURL;
+import com.example.plantaseed.R;
 
-    public Plant(String name, String scientificName, String opinion, String imageURL) {
+public class Plant {
+    private String name,description, scientificName;
+    private int imageURL;
+
+
+    public Plant(String name, String scientificName, String description) {
         this.name = name;
         this.scientificName = scientificName;
-        this.opinion = opinion;
-        this.imageURL = imageURL;
+        this.imageURL = R.drawable.ic_launcher_background;
+        this.description = description;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getScientificName() {
         return scientificName;
     }
 
-    public String getOpinion() {
-        return opinion;
+    public int getImageURL(){ return imageURL;}
+
+    public String getDescription() {
+        return description;
     }
 
-    public String getImageURL(){ return imageURL;}
 
 }

@@ -5,4 +5,5 @@
     <string name="plants">Plants</string>
     <string name="info">Info</string>
     <string name="title">Plant a Seed</string>
+    <string name="plant_image">Plant image</string>
 </resources>
