@@ -21,5 +21,21 @@
         android:name="com.example.plantaseed.View.PlantsFragment"
         android:label="fragment_plants"
         tools:layout="@layout/fragment_plants" >
+        <action
+            android:id="@+id/navigateToAddNew"
+            app:destination="@id/NewItemFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"/>
+    </fragment>
+    <fragment
+        android:id="@+id/NewItemFragment"
+        android:name="com.example.plantaseed.View.NewItemFragment"
+        android:label="fragment_additem"
+        tools:layout="@layout/fragment_new_item" >
+        <action
+            android:id="@+id/navigateToPlants"
+            app:destination="@id/plantsFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
 </navigation>

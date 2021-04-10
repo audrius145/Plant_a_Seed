@@ -1,16 +1,19 @@
 package com.example.plantaseed.Model;
 
-import com.example.plantaseed.R;
 
+import androidx.room.Entity;
+
+import com.example.plantaseed.R;
+@Entity(tableName = "plant_table")
 public class Plant {
     private String name,description, scientificName;
-    private int imageURL;
+    private int imageURI;
 
 
     public Plant(String name, String scientificName, String description) {
         this.name = name;
         this.scientificName = scientificName;
-        this.imageURL = R.drawable.ic_launcher_background;
+        this.imageURI = R.drawable.ic_launcher_background;
         this.description = description;
     }
 
@@ -22,7 +25,7 @@ public class Plant {
         return scientificName;
     }
 
-    public int getImageURL(){ return imageURL;}
+    public int getImageURL(){ return imageURI;}
 
     public String getDescription() {
         return description;

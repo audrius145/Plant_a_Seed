@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.PlantASeed" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/whitegray</item>
-        <item name="colorPrimaryVariant">@color/whitegrayvar1</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimaryVariant">@color/greenvar1</item>
+        <item name="colorOnPrimary">@color/greenvar2</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green</item>
         <item name="colorSecondaryVariant">@color/greenvar1</item>
