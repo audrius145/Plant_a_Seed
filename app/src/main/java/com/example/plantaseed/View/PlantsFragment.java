@@ -19,9 +19,11 @@ import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlantsFragment extends Fragment {
+    private ArrayList<Plant> plants;
     RecyclerView recyclerView;
     PlantAdapter plantAdapter;
     FloatingActionButton fab;
@@ -35,25 +37,28 @@ public class PlantsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
-
+        createPlantList();
         ///////////////////////////////////////////////////////////////////////////////
         fab = view.findViewById(R.id.plantFab);
         recyclerView = view.findViewById(R.id.recyclerPlant);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        plantAdapter = new PlantAdapter(getPlantList());
-        recyclerView.setAdapter(plantAdapter);
+        BuildRecyclerView();
+
         ///////////////////////////////////////////////////////////////////////////////
         fab.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigateToAddNew));
         return view;
     }
 
+    private void BuildRecyclerView() {
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        plantAdapter = new PlantAdapter(plants);
+        recyclerView.setAdapter(plantAdapter);
+    }
 
 
-
-    private ArrayList<Plant> getPlantList()
+    private void createPlantList()
     {
-        ArrayList<Plant> plants = new ArrayList<>();
+        plants = new ArrayList<>();
 
         Plant a = new Plant("Leafy mcLeaf", "Leafy lefiosa", "Big chunky leaves" );
         plants.add(a);
@@ -72,6 +77,5 @@ public class PlantsFragment extends Fragment {
         Plant h = new Plant("Dutchmans pipevine", "Aristolochia tomentosa", "Its pretty toxic" );
         plants.add(h);
 
-        return plants;
     }
 }

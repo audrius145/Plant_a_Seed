@@ -25,9 +25,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
 import com.google.android.material.navigation.NavigationView;
 
@@ -46,8 +48,12 @@ public class NewItemFragment extends Fragment {
 
     ImageView plantPhoto;
     Button takePhoto;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     String currentPhotoPath;
+    Button addButton;
+    EditText plantName;
+    EditText plantDescription;
+
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
     public NewItemFragment() {
@@ -65,20 +71,26 @@ public class NewItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_new_item, container, false);
+        addButton = view.findViewById(R.id.addButton);
         plantPhoto = view.findViewById(R.id.plantImage);
         takePhoto = view.findViewById(R.id.take_photo);
+        plantDescription = view.findViewById(R.id.plant_description);
+        plantName = view.findViewById(R.id.plant_name);
         takePhoto.setOnClickListener(v -> {
-//                if(ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-//                {
-//                    ActivityCompat.requestPermissions(getActivity(), new String[]{
-//                            Manifest.permission.CAMERA
-//                    },100);
-//                }
-//                else {
-//                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                    startActivityForResult(intent, 100);
-//                }
-            dispatchTakePictureIntent();
+                if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{
+                            Manifest.permission.CAMERA
+                    },100);
+                }
+                else {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, 100);
+                }
+
+        });
+        addButton.setOnClickListener(v ->{
+            dispatchCreate();
         });
         return view;
     }
@@ -86,15 +98,24 @@ public class NewItemFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (data == null) {
-            Toast.makeText(getContext(), "Data is null", Toast.LENGTH_SHORT).show();
-        } else {
-            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                plantPhoto.setImageBitmap(imageBitmap);
-            }
+
+//            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+////                Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+////                plantPhoto.setImageBitmap(imageBitmap);
+//                Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
+//                plantPhoto.setImageBitmap(capturedImage);
+//
+//            }
+
+        if (requestCode == 100) {
+//                Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+//                plantPhoto.setImageBitmap(imageBitmap);
+            Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
+            plantPhoto.setImageBitmap(capturedImage);
 
         }
+
+
 
     }
 
@@ -116,11 +137,8 @@ public class NewItemFragment extends Fragment {
     }
 
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    private void dispatchCreate() {
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Create the File where the photo should go
             File photoFile = null;
             try {
                 photoFile = createImageFile();
@@ -132,9 +150,9 @@ public class NewItemFragment extends Fragment {
                 Uri photoURI = FileProvider.getUriForFile(getActivity(),
                         "com.example.plantaseed.fileprovider",
                         photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+
             }
+            Plant plant = new Plant(plantName.getText().toString(),"",plantDescription.getText().toString(),currentPhotoPath);
         }
 
     }
@@ -147,5 +165,3 @@ public class NewItemFragment extends Fragment {
 
 
 
-
-}

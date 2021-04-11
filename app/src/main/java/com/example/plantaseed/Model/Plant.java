@@ -6,14 +6,21 @@ import androidx.room.Entity;
 import com.example.plantaseed.R;
 @Entity(tableName = "plant_table")
 public class Plant {
-    private String name,description, scientificName;
-    private int imageURI;
+    private String name,description, scientificName, imageURI;
+    private int image;
+
 
 
     public Plant(String name, String scientificName, String description) {
         this.name = name;
         this.scientificName = scientificName;
-        this.imageURI = R.drawable.ic_launcher_background;
+        this.image = R.drawable.ic_launcher_background;
+        this.description = description;
+    }
+    public Plant(String name, String scientificName, String description, String imageURI) {
+        this.name = name;
+        this.scientificName = scientificName;
+        this.imageURI = imageURI;
         this.description = description;
     }
 
@@ -25,8 +32,9 @@ public class Plant {
         return scientificName;
     }
 
-    public int getImageURL(){ return imageURI;}
+    public int getImage(){ return image;}
 
+    public String getImageURI(){return imageURI;}
     public String getDescription() {
         return description;
     }

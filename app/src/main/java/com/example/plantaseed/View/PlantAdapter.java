@@ -38,7 +38,7 @@ public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.plantName.setText(plants.get(position).getName());
         holder.plantDescription.setText(plants.get(position).getDescription());
-        holder.plantImageView.setImageResource(plants.get(position).getImageURL());
+        holder.plantImageView.setImageResource(plants.get(position).getImage());
     }
 
     @Override
