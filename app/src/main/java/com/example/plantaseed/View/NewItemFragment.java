@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.plantaseed.R;
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -45,7 +46,6 @@ public class NewItemFragment extends Fragment {
 
     ImageView plantPhoto;
     Button takePhoto;
-    Context context = getActivity();
     static final int REQUEST_IMAGE_CAPTURE = 1;
     String currentPhotoPath;
 
@@ -85,11 +85,15 @@ public class NewItemFragment extends Fragment {
 
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            plantPhoto.setImageBitmap(imageBitmap);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            Toast.makeText(getContext(), "Data is null", Toast.LENGTH_SHORT).show();
+        } else {
+            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                plantPhoto.setImageBitmap(imageBitmap);
+            }
+
         }
 
     }
@@ -99,7 +103,7 @@ public class NewItemFragment extends Fragment {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -115,7 +119,7 @@ public class NewItemFragment extends Fragment {
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(context.getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             // Create the File where the photo should go
             File photoFile = null;
             try {
@@ -125,13 +129,23 @@ public class NewItemFragment extends Fragment {
             }
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(context,
+                Uri photoURI = FileProvider.getUriForFile(getActivity(),
                         "com.example.plantaseed.fileprovider",
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
             }
         }
+
     }
+
+
+
+
+
+
+
+
+
 
 }
