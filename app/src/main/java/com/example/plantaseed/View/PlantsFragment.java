@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class PlantsFragment extends Fragment {
     RecyclerView recyclerView;
     PlantAdapter plantAdapter;
     FloatingActionButton fab;
-
+    String plantJSON;
     public PlantsFragment() {
 
     }
@@ -45,6 +46,13 @@ public class PlantsFragment extends Fragment {
 
         ///////////////////////////////////////////////////////////////////////////////
         fab.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigateToAddNew));
+
+
+        if (getArguments() != null && getArguments().containsKey("plantObject")) {
+            plantJSON = getArguments().getString("plantObject");
+            Plant newPlant = new Gson().fromJson(plantJSON, Plant.class);
+            plants.add(newPlant);
+        }
         return view;
     }
 

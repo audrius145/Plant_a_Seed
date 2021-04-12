@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -32,10 +33,13 @@ import android.widget.Toast;
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -52,7 +56,8 @@ public class NewItemFragment extends Fragment {
     Button addButton;
     EditText plantName;
     EditText plantDescription;
-
+    Bitmap bitmap;
+    View view;
     static final int REQUEST_IMAGE_CAPTURE = 1;
 
 
@@ -70,26 +75,24 @@ public class NewItemFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_new_item, container, false);
+        view = inflater.inflate(R.layout.fragment_new_item, container, false);
         addButton = view.findViewById(R.id.addButton);
         plantPhoto = view.findViewById(R.id.plantImage);
         takePhoto = view.findViewById(R.id.take_photo);
         plantDescription = view.findViewById(R.id.plant_description);
         plantName = view.findViewById(R.id.plant_name);
         takePhoto.setOnClickListener(v -> {
-                if(ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                {
-                    ActivityCompat.requestPermissions(getActivity(), new String[]{
-                            Manifest.permission.CAMERA
-                    },100);
-                }
-                else {
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, 100);
-                }
+            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{
+                        Manifest.permission.CAMERA
+                }, 100);
+            } else {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, 100);
+            }
 
         });
-        addButton.setOnClickListener(v ->{
+        addButton.setOnClickListener(v -> {
             dispatchCreate();
         });
         return view;
@@ -98,25 +101,11 @@ public class NewItemFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-//            if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-////                Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
-////                plantPhoto.setImageBitmap(imageBitmap);
-//                Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
-//                plantPhoto.setImageBitmap(capturedImage);
-//
-//            }
-
         if (requestCode == 100) {
-//                Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
-//                plantPhoto.setImageBitmap(imageBitmap);
             Bitmap capturedImage = (Bitmap) data.getExtras().get("data");
+            bitmap = capturedImage;
             plantPhoto.setImageBitmap(capturedImage);
-
         }
-
-
-
     }
 
 
@@ -136,26 +125,36 @@ public class NewItemFragment extends Fragment {
         return image;
     }
 
+    private void saveImage(File file) {
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            plantPhoto.invalidate();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void dispatchCreate() {
-        // Ensure that there's a camera activity to handle the intent
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            saveImage(photoFile);
 
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                        "com.example.plantaseed.fileprovider",
-                        photoFile);
+            plantPhoto.setImageURI(Uri.parse(currentPhotoPath));
+            Plant plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
+            Bundle bundle = new Bundle();
+            bundle.putString("plantObject", new Gson().toJson(plant));
+            Navigation.findNavController(view).navigate(R.id.plantsFragment,bundle);
 
-            }
-            Plant plant = new Plant(plantName.getText().toString(),"",plantDescription.getText().toString(),currentPhotoPath);
+
         }
 
     }
+}
 
 
 
