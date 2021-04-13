@@ -141,17 +141,18 @@ public class NewItemFragment extends Fragment {
         File photoFile = null;
         try {
             photoFile = createImageFile();
-        } catch (IOException ex) {
             saveImage(photoFile);
+        } catch (IOException ex) {
 
-            plantPhoto.setImageURI(Uri.parse(currentPhotoPath));
+        }
+
             Plant plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
             Bundle bundle = new Bundle();
             bundle.putString("plantObject", new Gson().toJson(plant));
             Navigation.findNavController(view).navigate(R.id.plantsFragment,bundle);
 
 
-        }
+
 
     }
 }
