@@ -16,6 +16,7 @@
         <ImageView
             android:layout_width="75dp"
             android:layout_height="75dp"
+            android:scaleType="centerCrop"
             android:id="@+id/plantImage"
             android:src="@mipmap/ic_launcher"
             android:contentDescription="@string/plant_image" />
@@ -47,6 +48,5 @@
             android:layout_marginTop="5dp"
             android:layout_below="@id/plantName"/>
 
-        
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

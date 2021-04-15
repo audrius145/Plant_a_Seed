@@ -14,7 +14,7 @@ public class Plant {
     public Plant(String name, String scientificName, String description) {
         this.name = name;
         this.scientificName = scientificName;
-        this.image = R.drawable.ic_launcher_background;
+        this.image = R.mipmap.ic_image_placeholder_plant;
         this.description = description;
     }
     public Plant(String name, String scientificName, String description, String imageURI) {

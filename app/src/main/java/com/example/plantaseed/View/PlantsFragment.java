@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.plantaseed.Model.Plant;
+import com.example.plantaseed.Model.Room;
 import com.example.plantaseed.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
@@ -23,10 +24,12 @@ import com.google.gson.Gson;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 public class PlantsFragment extends Fragment {
     private ArrayList<Plant> plants;
     RecyclerView recyclerView;
-    PlantAdapter plantAdapter;
+    RoomAdapter roomAdapter;
     FloatingActionButton fab;
     String plantJSON;
     public PlantsFragment() {
@@ -41,7 +44,7 @@ public class PlantsFragment extends Fragment {
         createPlantList();
         ///////////////////////////////////////////////////////////////////////////////
         fab = view.findViewById(R.id.plantFab);
-        recyclerView = view.findViewById(R.id.recyclerPlant);
+        recyclerView = view.findViewById(R.id.parent_recyclerview);
         BuildRecyclerView();
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -52,6 +55,7 @@ public class PlantsFragment extends Fragment {
             plantJSON = getArguments().getString("plantObject");
             Plant newPlant = new Gson().fromJson(plantJSON, Plant.class);
             plants.add(newPlant);
+            roomAdapter.notifyDataSetChanged();
         }
         return view;
     }
@@ -59,10 +63,18 @@ public class PlantsFragment extends Fragment {
     private void BuildRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        plantAdapter = new PlantAdapter(plants);
-        recyclerView.setAdapter(plantAdapter);
+        roomAdapter = new RoomAdapter(buildRoomList());
+        recyclerView.setAdapter(roomAdapter);
+        recyclerView.setItemAnimator(new SlideInUpAnimator());
     }
-
+    private ArrayList<Room> buildRoomList() {
+        ArrayList<Room> roomList = new ArrayList<>();
+        for (int i=0; i<10; i++) {
+            Room room = new Room("Item "+i, plants);
+            roomList.add(room);
+        }
+        return roomList;
+    }
 
     private void createPlantList()
     {
@@ -84,6 +96,7 @@ public class PlantsFragment extends Fragment {
         plants.add(g);
         Plant h = new Plant("Dutchmans pipevine", "Aristolochia tomentosa", "Its pretty toxic" );
         plants.add(h);
+
 
     }
 }

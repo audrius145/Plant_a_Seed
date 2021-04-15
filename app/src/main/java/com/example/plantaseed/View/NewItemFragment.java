@@ -146,6 +146,7 @@ public class NewItemFragment extends Fragment {
 
         }
 
+
             Plant plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
             Bundle bundle = new Bundle();
             bundle.putString("plantObject", new Gson().toJson(plant));

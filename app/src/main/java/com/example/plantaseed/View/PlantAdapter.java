@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
 
@@ -38,7 +39,15 @@ public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.plantName.setText(plants.get(position).getName());
         holder.plantDescription.setText(plants.get(position).getDescription());
-        holder.plantImageView.setImageResource(plants.get(position).getImage());
+        if(plants.get(position).getImageURI() == null)
+        {
+            holder.plantImageView.setImageResource(R.mipmap.ic_image_placeholder_plant);
+        }
+        else{
+            Glide.with(holder.plantImageView).load(plants.get(position).getImageURI()).into(holder.plantImageView);
+        }
+
+
     }
 
     @Override
