@@ -16,6 +16,7 @@ Must have:
 4. As a user I should be able to create rooms
 
 Should have:
+
 6. As a user I should be able to group my plants by rooms
 7. As a user I should be able to take a photo of my plant, so I can capture its growth
 8. As a user I should be able to receive notifications whenever my plant needs to be watered again.
