@@ -39,7 +39,7 @@ public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.plantName.setText(plants.get(position).getName());
         holder.plantDescription.setText(plants.get(position).getDescription());
-        if(plants.get(position).getImageURI() == null)
+        if(plants.get(position).getImageURI().equals(""))
         {
             holder.plantImageView.setImageResource(R.mipmap.ic_image_placeholder_plant);
         }

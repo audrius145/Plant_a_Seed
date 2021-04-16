@@ -139,6 +139,7 @@ public class NewItemFragment extends Fragment {
 
     private void dispatchCreate() {
         File photoFile = null;
+        Plant plant;
         try {
             photoFile = createImageFile();
             saveImage(photoFile);
@@ -146,8 +147,16 @@ public class NewItemFragment extends Fragment {
 
         }
 
+        if(photoFile.length() == 0 )
+        {
+             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString());
+        }
+        else
+        {
+             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
+        }
 
-            Plant plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
+
             Bundle bundle = new Bundle();
             bundle.putString("plantObject", new Gson().toJson(plant));
             Navigation.findNavController(view).navigate(R.id.plantsFragment,bundle);

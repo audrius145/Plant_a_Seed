@@ -13,19 +13,52 @@
         android:id="@+id/parent_recyclerview"
         android:paddingBottom="?attr/actionBarSize"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/plantFab"
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/plantFab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="end|bottom"-->
+<!--        android:src="@drawable/ic_add"-->
+<!--        app:fabSize="normal"-->
+<!--        app:backgroundTint="@color/black"-->
+<!--        app:tint ="@color/green"-->
+<!--        android:layout_marginBottom="65dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:layout_marginRight="16dp"-->
+<!--        app:elevation="2dp" />-->
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_add"
-        app:fabSize="normal"
-        app:backgroundTint="@color/black"
-        app:tint ="@color/green"
         android:layout_marginBottom="65dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        app:elevation="2dp" />
+        app:elevation="2dp"
+        app:fab_addButtonColorNormal="@color/black"
+        app:fab_addButtonColorPressed="@color/green"
+        app:fab_addButtonPlusIconColor="@color/greenvar1">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/addPlant"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/greenvar1"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_plantholder"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/addRoom"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/greenvar1"
+            app:fab_size="mini"
+            app:fab_icon="@drawable/ic_livingroom"/>
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

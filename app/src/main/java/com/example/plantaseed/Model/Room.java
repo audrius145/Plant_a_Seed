@@ -1,17 +1,24 @@
 package com.example.plantaseed.Model;
 
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
 
 @Entity(tableName = "table_room")
 public class Room {
+    private int roomId;
     private String roomName;
-    private ArrayList<Plant> plantsInRoom;
-
-    public Room(String roomName, ArrayList<Plant> plantsInRoom) {
+    public Room(String roomName)
+    {
         this.roomName = roomName;
-        this.plantsInRoom = plantsInRoom;
+    }
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
     public String getRoomName() {
@@ -22,11 +29,9 @@ public class Room {
         this.roomName = roomName;
     }
 
-    public ArrayList<Plant> getPlantsInRoom() {
-        return plantsInRoom;
-    }
 
-    public void setPlantsInRoom(ArrayList<Plant> plantsInRoom) {
-        this.plantsInRoom = plantsInRoom;
-    }
+
+
+
+
 }

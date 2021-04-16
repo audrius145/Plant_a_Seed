@@ -18,19 +18,20 @@ import android.view.ViewGroup;
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.Model.Room;
 import com.example.plantaseed.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class PlantsFragment extends Fragment {
     private ArrayList<Plant> plants;
     RecyclerView recyclerView;
     RoomAdapter roomAdapter;
-    FloatingActionButton fab;
+    FloatingActionButton plantFab;
+    FloatingActionButton roomFab;
     String plantJSON;
     public PlantsFragment() {
 
@@ -43,12 +44,13 @@ public class PlantsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
         createPlantList();
         ///////////////////////////////////////////////////////////////////////////////
-        fab = view.findViewById(R.id.plantFab);
+        plantFab = view.findViewById(R.id.addPlant);
+        roomFab = view.findViewById(R.id.addRoom);
         recyclerView = view.findViewById(R.id.parent_recyclerview);
         BuildRecyclerView();
 
         ///////////////////////////////////////////////////////////////////////////////
-        fab.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigateToAddNew));
+        plantFab.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigateToAddNew));
 
 
         if (getArguments() != null && getArguments().containsKey("plantObject")) {
@@ -65,7 +67,6 @@ public class PlantsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         roomAdapter = new RoomAdapter(buildRoomList());
         recyclerView.setAdapter(roomAdapter);
-        recyclerView.setItemAnimator(new SlideInUpAnimator());
     }
     private ArrayList<Room> buildRoomList() {
         ArrayList<Room> roomList = new ArrayList<>();
@@ -96,7 +97,6 @@ public class PlantsFragment extends Fragment {
         plants.add(g);
         Plant h = new Plant("Dutchmans pipevine", "Aristolochia tomentosa", "Its pretty toxic" );
         plants.add(h);
-
 
     }
 }
