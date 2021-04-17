@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,17 +20,23 @@ import android.view.ViewGroup;
 
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.Model.Room;
+import com.example.plantaseed.Model.RoomWithPlants;
 import com.example.plantaseed.R;
 
+import com.example.plantaseed.ViewModel.PlantViewModel;
+import com.example.plantaseed.ViewModel.RoomViewModel;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class PlantsFragment extends Fragment {
     private ArrayList<Plant> plants;
+    private RoomViewModel roomViewModel;
+    private PlantViewModel plantViewModel;
     RecyclerView recyclerView;
     RoomAdapter roomAdapter;
     FloatingActionButton plantFab;
@@ -42,7 +51,15 @@ public class PlantsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
-        createPlantList();
+        roomViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(RoomViewModel.class);
+        plantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PlantViewModel.class);
+        roomViewModel.getAllRoomsWithPlants().observe(getViewLifecycleOwner(), new Observer<List<RoomWithPlants>>() {
+            @Override
+            public void onChanged(List<RoomWithPlants> rooms) {
+                roomAdapter.setRooms(rooms);
+            }
+        });
+
         ///////////////////////////////////////////////////////////////////////////////
         plantFab = view.findViewById(R.id.addPlant);
         roomFab = view.findViewById(R.id.addRoom);
@@ -65,38 +82,9 @@ public class PlantsFragment extends Fragment {
     private void BuildRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        roomAdapter = new RoomAdapter(buildRoomList());
+        roomAdapter = new RoomAdapter();
         recyclerView.setAdapter(roomAdapter);
     }
-    private ArrayList<Room> buildRoomList() {
-        ArrayList<Room> roomList = new ArrayList<>();
-        for (int i=0; i<10; i++) {
-            Room room = new Room("Item "+i, plants);
-            roomList.add(room);
-        }
-        return roomList;
-    }
 
-    private void createPlantList()
-    {
-        plants = new ArrayList<>();
 
-        Plant a = new Plant("Leafy mcLeaf", "Leafy lefiosa", "Big chunky leaves" );
-        plants.add(a);
-        Plant b = new Plant("Jade plant", "Crassula ovata", "Big chunky leaves" );
-        plants.add(b);
-        Plant c = new Plant("Wild Rose", "Rosa Rugosa", "Smells good" );
-        plants.add(c);
-        Plant d = new Plant("Rapeseed", "Brassica Napus", "Smells bad" );
-        plants.add(d);
-        Plant e = new Plant("Chinese money plant", "Pilea peperomioides", "Doesnt grow money" );
-        plants.add(e);
-        Plant f = new Plant("Devils ivy", "Epipremnum aureum", "Stupid ivy" );
-        plants.add(f);
-        Plant g = new Plant("Ghost Plant", "Monotropa uniflora", "Call the ghost busters" );
-        plants.add(g);
-        Plant h = new Plant("Dutchmans pipevine", "Aristolochia tomentosa", "Its pretty toxic" );
-        plants.add(h);
-
-    }
 }

@@ -21,4 +21,16 @@ public class RoomWithPlants {
         this.room = room;
         this.plants = plants;
     }
+
+    public Room getRoom()
+    {
+        return room;
+    }
+
+    public List<Plant> getPlants()
+    {
+        return plants;
+    }
+
+
 }

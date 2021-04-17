@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 @Entity(tableName = "table_room")
 public class Room {
+    @PrimaryKey(autoGenerate = true)
     private int roomId;
     private String roomName;
     public Room(String roomName)

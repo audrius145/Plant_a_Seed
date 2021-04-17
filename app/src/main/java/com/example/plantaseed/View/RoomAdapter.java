@@ -10,19 +10,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plantaseed.Model.Room;
+import com.example.plantaseed.Model.RoomWithPlants;
 import com.example.plantaseed.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-    private ArrayList<Room> roomList;
+    private List<RoomWithPlants> roomList = new ArrayList<>();
 
-    RoomAdapter(ArrayList<Room> roomList) {
-        this.roomList = roomList;
-    }
+
 
     @NonNull
     @Override
@@ -33,8 +33,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
-        Room room = roomList.get(position);
-        holder.roomTitle.setText(room.getRoomName());
+        RoomWithPlants room = roomList.get(position);
+        holder.roomTitle.setText(room.getRoom().getRoomName());
 
         // Create layout manager with initial prefetch item count
         LinearLayoutManager layoutManager = new LinearLayoutManager(
@@ -42,10 +42,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
                 LinearLayoutManager.VERTICAL,
                 false
         );
-        layoutManager.setInitialPrefetchItemCount(room.getPlantsInRoom().size());
+        layoutManager.setInitialPrefetchItemCount(room.getPlants().size());
 
         // Create sub item view adapter
-        PlantAdapter plantAdapter = new PlantAdapter(room.getPlantsInRoom());
+        PlantAdapter plantAdapter = new PlantAdapter(room.getPlants());
 
         holder.room.setLayoutManager(layoutManager);
         holder.room.setAdapter(plantAdapter);
@@ -57,6 +57,11 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         return roomList.size();
     }
 
+    public void setRooms(List<RoomWithPlants> rooms)
+    {
+        this.roomList = rooms;
+        notifyDataSetChanged();
+    }
 
     class RoomViewHolder extends RecyclerView.ViewHolder {
         private TextView roomTitle;

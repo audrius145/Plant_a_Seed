@@ -1,5 +1,6 @@
 package com.example.plantaseed.Model;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -11,9 +12,11 @@ import java.util.List;
 
 @Dao
 public interface RoomDAO {
+
+
     @Transaction
     @Insert
-    long insertRoom(Room room);
+    void insert(Room room);
 
     @Update
     void update(Room room);
@@ -21,8 +24,16 @@ public interface RoomDAO {
     @Delete
     void delete(Room room);
 
+    @Query("SELECT * FROM table_room WHERE roomId =:id")
+    Room findById(int id);
+
+    @Query("DELETE FROM table_room")
+    void deleteAllRooms();
+
     @Transaction
     @Query("SELECT * FROM table_room")
-    List<RoomWithPlants> getUsersWithPlaylists();
+    LiveData<List<RoomWithPlants>> getRoomsWithPlants();
+
+
 
 }

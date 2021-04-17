@@ -29,14 +29,6 @@ public class Plant {
     private String imageURI;
 
 
-
-    public Plant(String name, String scientificName, String description) {
-        this.name = name;
-        this.scientificName = scientificName;
-        this.imageURI = "";
-        this.description = description;
-    }
-
     public Plant(String name, String scientificName, String description, String imageURI) {
         this.name = name;
         this.scientificName = scientificName;

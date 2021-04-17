@@ -149,7 +149,7 @@ public class NewItemFragment extends Fragment {
 
         if(photoFile.length() == 0 )
         {
-             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString());
+             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(),"");
         }
         else
         {

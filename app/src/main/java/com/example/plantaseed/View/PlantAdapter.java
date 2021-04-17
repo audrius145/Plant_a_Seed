@@ -14,14 +14,15 @@ import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
 
 
 
-    ArrayList<Plant> plants;
+    List<Plant> plants;
 
-    public PlantAdapter(ArrayList<Plant> plants) {
+    public PlantAdapter(List<Plant> plants) {
 
         this.plants = plants;
     }
