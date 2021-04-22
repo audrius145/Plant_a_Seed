@@ -9,7 +9,9 @@ import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {Plant.class, com.example.plantaseed.Model.Room.class}, version = 2, exportSchema = false)
+import java.util.concurrent.Executors;
+
+@Database(entities = {Plant.class, com.example.plantaseed.Model.Room.class}, version = 6, exportSchema = false)
 public abstract class PlantDatabase extends RoomDatabase {
     private static PlantDatabase instance;
 
@@ -21,37 +23,19 @@ public abstract class PlantDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(), PlantDatabase.class,
                     "plant_a_seed_database")
                     .fallbackToDestructiveMigration()
-                    .addCallback(roomCallback)
-                    .build();
+                    .addCallback(new Callback() {
+                        @Override
+                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                            super.onCreate(db);
+                            Executors.newSingleThreadScheduledExecutor().execute(() -> getInstance(context).plantDAO().insert(new Plant("", "", "", "")));
+                        }
+                    }).build();
+
+
         }
     return instance;
     }
 
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            new PopulateDbAsyncTask(instance).execute();
-        }
 
-    };
-
-    private static class PopulateDbAsyncTask extends AsyncTask<Void,Void,Void>
-    {
-        private RoomDAO roomDAO;
-
-        private PopulateDbAsyncTask(PlantDatabase db)
-        {
-            roomDAO = db.roomDAO();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            roomDAO.insert(new com.example.plantaseed.Model.Room("Toilet"));
-            roomDAO.insert(new com.example.plantaseed.Model.Room("Unknown"));
-            roomDAO.insert(new com.example.plantaseed.Model.Room("Living Room"));
-            return null;
-        }
-    }
 
 }

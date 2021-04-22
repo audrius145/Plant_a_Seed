@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -53,17 +54,14 @@ public class PlantsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_plants, container, false);
         roomViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(RoomViewModel.class);
         plantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PlantViewModel.class);
-        roomViewModel.getAllRoomsWithPlants().observe(getViewLifecycleOwner(), new Observer<List<RoomWithPlants>>() {
-            @Override
-            public void onChanged(List<RoomWithPlants> rooms) {
-                roomAdapter.setRooms(rooms);
-            }
-        });
+        roomViewModel.getAllRoomsWithPlants().observe(getViewLifecycleOwner(), rooms -> roomAdapter.setRooms(rooms));
 
         ///////////////////////////////////////////////////////////////////////////////
         plantFab = view.findViewById(R.id.addPlant);
         roomFab = view.findViewById(R.id.addRoom);
         recyclerView = view.findViewById(R.id.parent_recyclerview);
+        plants = new ArrayList<>();
+
         BuildRecyclerView();
 
         ///////////////////////////////////////////////////////////////////////////////
@@ -73,7 +71,7 @@ public class PlantsFragment extends Fragment {
         if (getArguments() != null && getArguments().containsKey("plantObject")) {
             plantJSON = getArguments().getString("plantObject");
             Plant newPlant = new Gson().fromJson(plantJSON, Plant.class);
-            plants.add(newPlant);
+            plantViewModel.insert(newPlant);
             roomAdapter.notifyDataSetChanged();
         }
         return view;

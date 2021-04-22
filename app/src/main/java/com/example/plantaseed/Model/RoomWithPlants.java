@@ -12,7 +12,7 @@ public class RoomWithPlants {
 
     @Relation(
             parentColumn = "roomId",
-            entityColumn = "plantId"
+            entityColumn = "id_fkRoom"
     )
     public List<Plant> plants;
 
