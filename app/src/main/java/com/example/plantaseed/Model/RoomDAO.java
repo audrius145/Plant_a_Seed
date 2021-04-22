@@ -30,6 +30,8 @@ public interface RoomDAO {
     @Query("DELETE FROM table_room")
     void deleteAllRooms();
 
+    @Query("SELECT * FROM table_room")
+            LiveData<List<Room>> getAllRooms();
     @Transaction
     @Query("SELECT * FROM table_room")
     LiveData<List<RoomWithPlants>> getRoomsWithPlants();

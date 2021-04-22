@@ -30,6 +30,11 @@ public class Room {
         this.roomName = roomName;
     }
 
+    public String toString()
+    {
+        return roomName;
+    }
+
 
 
 

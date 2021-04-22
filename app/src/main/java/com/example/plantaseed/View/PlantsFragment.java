@@ -35,7 +35,6 @@ import java.util.List;
 
 
 public class PlantsFragment extends Fragment {
-    private ArrayList<Plant> plants;
     private RoomViewModel roomViewModel;
     private PlantViewModel plantViewModel;
     RecyclerView recyclerView;
@@ -60,14 +59,12 @@ public class PlantsFragment extends Fragment {
         plantFab = view.findViewById(R.id.addPlant);
         roomFab = view.findViewById(R.id.addRoom);
         recyclerView = view.findViewById(R.id.parent_recyclerview);
-        plants = new ArrayList<>();
 
         BuildRecyclerView();
 
         ///////////////////////////////////////////////////////////////////////////////
         plantFab.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigateToAddNew));
-
-
+        roomFab.setOnClickListener(v -> openDialog());
         if (getArguments() != null && getArguments().containsKey("plantObject")) {
             plantJSON = getArguments().getString("plantObject");
             Plant newPlant = new Gson().fromJson(plantJSON, Plant.class);
@@ -82,6 +79,12 @@ public class PlantsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         roomAdapter = new RoomAdapter();
         recyclerView.setAdapter(roomAdapter);
+    }
+
+    public void openDialog()
+    {
+        RoomDialog roomDialog = new RoomDialog();
+        roomDialog.show(getActivity().getSupportFragmentManager(),"room dialog");
     }
 
 

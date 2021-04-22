@@ -17,6 +17,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.os.Environment;
@@ -25,13 +28,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.plantaseed.Model.Plant;
+import com.example.plantaseed.Model.Room;
 import com.example.plantaseed.R;
+import com.example.plantaseed.ViewModel.RoomViewModel;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 
@@ -42,7 +50,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.URI;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import timber.log.Timber;
@@ -51,6 +61,8 @@ import timber.log.Timber;
 public class NewItemFragment extends Fragment {
 
     ImageView plantPhoto;
+    Spinner spinner;
+    List<Room> rooms;
     Button takePhoto;
     String currentPhotoPath;
     Button addButton;
@@ -76,11 +88,29 @@ public class NewItemFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_new_item, container, false);
+        RoomViewModel roomViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(RoomViewModel.class);
+
+
         addButton = view.findViewById(R.id.addButton);
         plantPhoto = view.findViewById(R.id.plantImage);
         takePhoto = view.findViewById(R.id.take_photo);
         plantDescription = view.findViewById(R.id.plant_description);
+        spinner = view.findViewById(R.id.spinner_room);
         plantName = view.findViewById(R.id.plant_name);
+        rooms = new ArrayList<>();
+        ArrayAdapter<Room> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, rooms);
+        spinner.setAdapter(adapter);
+//        spinner.getOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Room room = (Room)
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        })
         takePhoto.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{
@@ -90,10 +120,14 @@ public class NewItemFragment extends Fragment {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(intent, 100);
             }
-
         });
         addButton.setOnClickListener(v -> {
             dispatchCreate();
+        });
+        roomViewModel.getAllRooms().observe(getViewLifecycleOwner(), rooms -> {
+            adapter.clear();
+            adapter.addAll(rooms);
+            adapter.notifyDataSetChanged();
         });
         return view;
     }
@@ -106,6 +140,12 @@ public class NewItemFragment extends Fragment {
             bitmap = capturedImage;
             plantPhoto.setImageBitmap(capturedImage);
         }
+    }
+
+    public Room getSelectedRoom(View view)
+    {
+        Room room = (Room) spinner.getSelectedItem();
+        return room;
     }
 
 
@@ -147,21 +187,18 @@ public class NewItemFragment extends Fragment {
 
         }
 
-        if(photoFile.length() == 0 )
-        {
-             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(),"");
+        if (photoFile.length() == 0) {
+            plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), "");
+            plant.setId_fkRoom(getSelectedRoom(getView()).getRoomId());
+        } else {
+            plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
+            plant.setId_fkRoom(getSelectedRoom(getView()).getRoomId());
         }
-        else
-        {
-             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
-        }
 
 
-            Bundle bundle = new Bundle();
-            bundle.putString("plantObject", new Gson().toJson(plant));
-            Navigation.findNavController(view).navigate(R.id.plantsFragment,bundle);
-
-
+        Bundle bundle = new Bundle();
+        bundle.putString("plantObject", new Gson().toJson(plant));
+        Navigation.findNavController(view).navigate(R.id.plantsFragment, bundle);
 
 
     }

@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
 public class RoomRepository {
     private RoomDAO roomDAO;
     private LiveData<List<RoomWithPlants>> allRooms;
+    private LiveData<List<Room>> allRealRooms;
     private Executor executorService;
     private Handler mainThreadHandler;
 
@@ -29,6 +30,7 @@ public class RoomRepository {
         PlantDatabase database = PlantDatabase.getInstance(application);
         roomDAO = database.roomDAO();
         allRooms = roomDAO.getRoomsWithPlants();
+        allRealRooms = roomDAO.getAllRooms();
         executorService = Executors.newFixedThreadPool(2);
         mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     }
@@ -48,6 +50,10 @@ public class RoomRepository {
     public LiveData<List<RoomWithPlants>> getAllRoomsWithPlants()
     {
         return allRooms;
+    }
+    public LiveData<List<Room>> getAllRooms()
+    {
+        return allRealRooms;
     }
 
 
