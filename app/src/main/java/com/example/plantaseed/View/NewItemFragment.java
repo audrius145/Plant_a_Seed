@@ -100,17 +100,7 @@ public class NewItemFragment extends Fragment {
         rooms = new ArrayList<>();
         ArrayAdapter<Room> adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, rooms);
         spinner.setAdapter(adapter);
-//        spinner.getOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Room room = (Room)
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//            }
-//        })
+
         takePhoto.setOnClickListener(v -> {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{

@@ -38,4 +38,8 @@
             app:enterAnim="@anim/fragment_fade_enter"
             app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
+    <fragment
+        android:id="@+id/plantViewFragment"
+        android:name="com.example.plantaseed.View.PlantViewFragment"
+        android:label="PlantViewFragment" />
 </navigation>

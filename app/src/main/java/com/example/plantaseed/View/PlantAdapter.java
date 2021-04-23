@@ -18,13 +18,13 @@ import java.util.List;
 
 public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-
-
     List<Plant> plants;
+    private ItemClickListener clickListener;
 
-    public PlantAdapter(List<Plant> plants) {
+    public PlantAdapter(List<Plant> plants, ItemClickListener itemClickListener) {
 
         this.plants = plants;
+        this.clickListener  = itemClickListener;
     }
 
     @NonNull
@@ -48,11 +48,22 @@ public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
             Glide.with(holder.plantImageView).load(plants.get(position).getImageURI()).into(holder.plantImageView);
         }
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickListener.onItemClick(plants.get(position),view);
+            }
+        });
 
     }
 
     @Override
     public int getItemCount() {
         return plants.size();
+    }
+
+
+    public interface ItemClickListener{
+        void onItemClick(Plant plant, View view);
     }
 }
