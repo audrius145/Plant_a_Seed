@@ -10,22 +10,22 @@ MoSCoW requirements:
 
 Must have:
 
-1. As a user I should be able to log in, so I can have a personalized account.
 2. As a user I should be able to create a plant profile
 3. As a user I should be able to view plant profiles
 4. As a user I should be able to create rooms
+5. As a user I should be able to delete my plant profiles
 
 Should have:
 
 6. As a user I should be able to group my plants by rooms
 7. As a user I should be able to take a photo of my plant, so I can capture its growth
-8. As a user I should be able to receive notifications whenever my plant needs to be watered again.
-9. As a user I should be able to delete my plant profiles
 10. As a user I should be able to edit and update my plant profiles
+11. As a user I should be able to delete rooms
 
 Could have:
 
-11. As a user I should be able to access information about different plant species (from API possibly)
-12. As a user I should be able to document plant species
-13. As a user I should be able to share my plants progress in other medias.
+12. As a user I should be able to access information about different plant species (from API possibly)
+13. As a user I should be able to document plant species
+14. As a user I should be able to share my plants progress in other medias.
+8. As a user I should be able to receive notifications whenever my plant needs to be watered again
 
