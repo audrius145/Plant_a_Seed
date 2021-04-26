@@ -13,4 +13,18 @@
     <string name="scientific_name">Scientific name</string>
     <string name="description">Description</string>
     <string name="name">Name</string>
+    <string name="title_activity_auth">AuthActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="plant_a_seed">Plant a seed</string>
+    <string name="log_out">Log out</string>
+    <string name="filler_image">Filler image</string>
+    <string name="name">Name</string>
+    <string name="welcome">Welcome!</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="remove_plant">Remove Plant</string>
 </resources>

@@ -21,9 +21,9 @@ import com.google.gson.Gson;
 
 public class PlantViewFragment extends Fragment {
 
-    EditText plantName;
-    EditText scientificName;
-    EditText plantDesc;
+    TextView plantName;
+    TextView scientificName;
+    TextView plantDesc;
     ImageView plantIMG;
     String plantJSON;
 
@@ -40,7 +40,7 @@ public class PlantViewFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_plants, container, false);
+        View view = inflater.inflate(R.layout.fragment_plant_view, container, false);
 
         plantName = view.findViewById(R.id.pname);
         plantDesc = view.findViewById(R.id.pdesc);

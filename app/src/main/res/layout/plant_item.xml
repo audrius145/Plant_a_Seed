@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/plantName"
-            android:text="Name"
+            android:text="@string/name"
             android:textSize="22sp"
             android:textColor="#000"
             android:textStyle ="bold"
@@ -38,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/plantDescription"
-            android:text="Description"
+            android:text="@string/description"
             android:textSize="18sp"
             android:textColor="#a9a9a9"
             android:layout_toRightOf="@id/plantImage"
@@ -47,6 +47,15 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_below="@id/plantName"/>
+        <ImageView
+            android:id="@+id/deletePlant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_baseline_close_24"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/remove_plant" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

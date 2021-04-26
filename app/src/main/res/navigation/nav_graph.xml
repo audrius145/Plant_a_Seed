@@ -8,30 +8,28 @@
         android:id="@+id/homeFragment"
         android:name="com.example.plantaseed.View.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
-    </fragment>
+        tools:layout="@layout/fragment_home"></fragment>
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.example.plantaseed.View.InfoFragment"
         android:label="fragment_info"
-        tools:layout="@layout/fragment_info" >
-    </fragment>
+        tools:layout="@layout/fragment_info"></fragment>
     <fragment
         android:id="@+id/plantsFragment"
         android:name="com.example.plantaseed.View.PlantsFragment"
         android:label="fragment_plants"
-        tools:layout="@layout/fragment_plants" >
+        tools:layout="@layout/fragment_plants">
         <action
             android:id="@+id/navigateToAddNew"
             app:destination="@id/NewItemFragment"
             app:enterAnim="@anim/fragment_fade_enter"
-            app:exitAnim="@anim/fragment_fade_exit"/>
+            app:exitAnim="@anim/fragment_fade_exit" />
     </fragment>
     <fragment
         android:id="@+id/NewItemFragment"
         android:name="com.example.plantaseed.View.NewItemFragment"
         android:label="fragment_additem"
-        tools:layout="@layout/fragment_new_item" >
+        tools:layout="@layout/fragment_new_item">
         <action
             android:id="@+id/navigateToPlants"
             app:destination="@id/plantsFragment"

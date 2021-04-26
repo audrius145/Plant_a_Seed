@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
+import com.example.plantaseed.ViewModel.PlantViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
-
+public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> {
     List<Plant> plants;
     private ItemClickListener clickListener;
 
@@ -48,12 +50,7 @@ public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
             Glide.with(holder.plantImageView).load(plants.get(position).getImageURI()).into(holder.plantImageView);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onItemClick(plants.get(position),view);
-            }
-        });
+        holder.itemView.setOnClickListener(view -> clickListener.onItemClick(plants.get(position),view));
 
     }
 
@@ -62,8 +59,29 @@ public class PlantAdapter extends RecyclerView.Adapter<ViewHolder> {
         return plants.size();
     }
 
+    public Plant getPlantAt(int position)
+    {
+        return plants.get(position);
+    }
+
 
     public interface ItemClickListener{
         void onItemClick(Plant plant, View view);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView plantImageView;
+        TextView plantName, plantDescription;
+        ImageView deletePlant;
+
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            this.plantImageView = itemView.findViewById(R.id.plantImage);
+            this.plantName = itemView.findViewById(R.id.plantName);
+            this.plantDescription = itemView.findViewById(R.id.plantDescription);
+            this.deletePlant = (ImageView) itemView.findViewById(R.id.deletePlant);
+        }
     }
 }
