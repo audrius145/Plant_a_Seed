@@ -38,6 +38,12 @@ public class RoomViewModel extends AndroidViewModel {
         repository.delete(room);
     }
 
+    public Room findById(int id)
+    {
+        return repository.findById(id);
+    }
+
+
     public LiveData<List<RoomWithPlants>> getAllRoomsWithPlants()
     {
         return allRooms;

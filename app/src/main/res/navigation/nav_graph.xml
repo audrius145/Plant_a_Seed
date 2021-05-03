@@ -8,12 +8,12 @@
         android:id="@+id/homeFragment"
         android:name="com.example.plantaseed.View.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home"></fragment>
+        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/infoFragment"
         android:name="com.example.plantaseed.View.InfoFragment"
         android:label="fragment_info"
-        tools:layout="@layout/fragment_info"></fragment>
+        tools:layout="@layout/fragment_info" />
     <fragment
         android:id="@+id/plantsFragment"
         android:name="com.example.plantaseed.View.PlantsFragment"
@@ -39,5 +39,18 @@
     <fragment
         android:id="@+id/plantViewFragment"
         android:name="com.example.plantaseed.View.PlantViewFragment"
-        android:label="PlantViewFragment" />
+        android:label="PlantViewFragment" >
+        <action
+            android:id="@+id/action_plantViewFragment_to_updatePlantFragment"
+            app:destination="@id/updatePlantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updatePlantFragment"
+        android:name="com.example.plantaseed.View.UpdatePlantFragment"
+        android:label="fragment_update_plant"
+        tools:layout="@layout/fragment_update_plant" >
+        <action
+            android:id="@+id/action_updatePlantFragment_to_plantViewFragment"
+            app:destination="@id/plantViewFragment" />
+    </fragment>
 </navigation>

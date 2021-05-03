@@ -70,7 +70,7 @@ public class NewItemFragment extends Fragment {
     EditText plantDescription;
     Bitmap bitmap;
     View view;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+
 
 
     public NewItemFragment() {

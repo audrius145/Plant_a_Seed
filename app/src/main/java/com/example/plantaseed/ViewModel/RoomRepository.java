@@ -25,8 +25,7 @@ public class RoomRepository {
     private Executor executorService;
     private Handler mainThreadHandler;
 
-    public RoomRepository(Application application)
-    {
+    public RoomRepository(Application application) {
         PlantDatabase database = PlantDatabase.getInstance(application);
         roomDAO = database.roomDAO();
         allRooms = roomDAO.getRoomsWithPlants();
@@ -35,27 +34,29 @@ public class RoomRepository {
         mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     }
 
-    public void insert(Room room)
-    {
+    public void insert(Room room) {
         executorService.execute(() -> roomDAO.insert(room));
     }
-    public void update(Room room)
-    {
+
+    public void update(Room room) {
         executorService.execute(() -> roomDAO.update(room));
     }
-    public void delete(Room room)
-    {
+
+    public void delete(Room room) {
         executorService.execute(() -> roomDAO.delete(room));
     }
-    public LiveData<List<RoomWithPlants>> getAllRoomsWithPlants()
-    {
-        return allRooms;
-    }
-    public LiveData<List<Room>> getAllRooms()
-    {
-        return allRealRooms;
+
+    Room findById(int id) {
+        return roomDAO.findById(id);
     }
 
+    public LiveData<List<RoomWithPlants>> getAllRoomsWithPlants() {
+        return allRooms;
+    }
+
+    public LiveData<List<Room>> getAllRooms() {
+        return allRealRooms;
+    }
 
 
 }

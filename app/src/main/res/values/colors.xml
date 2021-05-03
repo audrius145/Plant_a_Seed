@@ -13,4 +13,5 @@
     <color name="greenvar1">#88c399</color>
     <color name="greenvar2">#ecfffd</color>
     <color name="lightgray">#D3D3D3</color>
+    <color name="red">#FF0000</color>
 </resources>

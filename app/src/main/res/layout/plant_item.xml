@@ -47,7 +47,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_below="@id/plantName"/>
-        <ImageView
+        <ImageButton
             android:id="@+id/deletePlant"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,7 +55,8 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_baseline_close_24"
             android:layout_alignParentEnd="true"
-            android:contentDescription="@string/remove_plant" />
+            android:contentDescription="@string/remove_plant"
+            android:background="@color/red"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

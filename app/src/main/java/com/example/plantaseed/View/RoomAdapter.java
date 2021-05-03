@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,9 +28,12 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
     private List<RoomWithPlants> roomList = new ArrayList<>();
+    private PlantAdapter.ItemClickListener listener;
 
-
-
+    public RoomAdapter(PlantAdapter.ItemClickListener listener)
+    {
+        this.listener = listener;
+    }
     @NonNull
     @Override
     public RoomViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -53,9 +58,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         PlantAdapter plantAdapter = new PlantAdapter(room.getPlants(), new PlantAdapter.ItemClickListener() {
             @Override
             public void onItemClick(Plant plant, View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString("plantObject", new Gson().toJson(plant));
-                Navigation.findNavController(view).navigate(R.id.plantViewFragment, bundle);
+                listener.onItemClick(plant,view);
+            }
+
+            @Override
+            public void onDeleteClick(Plant plant) {
+                listener.onDeleteClick(plant);
             }
         });
 
@@ -64,10 +72,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         holder.room.setRecycledViewPool(viewPool);
     }
 
-    private  void makeToast(String message,View view)
-    {
-        Toast.makeText(view.getContext(), message,Toast.LENGTH_SHORT).show();
-    }
+
     @Override
     public int getItemCount() {
         return roomList.size();

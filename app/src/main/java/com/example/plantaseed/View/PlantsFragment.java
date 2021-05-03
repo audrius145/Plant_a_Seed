@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.plantaseed.Model.Plant;
@@ -36,10 +37,6 @@ public class PlantsFragment extends Fragment {
     FloatingActionButton plantFab;
     FloatingActionButton roomFab;
     String plantJSON;
-    public PlantsFragment() {
-
-    }
-
 
     @Nullable
     @Override
@@ -52,7 +49,6 @@ public class PlantsFragment extends Fragment {
         plantFab = view.findViewById(R.id.addPlant);
         roomFab = view.findViewById(R.id.addRoom);
         recyclerView = view.findViewById(R.id.parent_recyclerview);
-
         BuildRecyclerView();
         ///////////////////////////////////////////////////////////////////////////////
         plantFab.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigateToAddNew));
@@ -63,13 +59,26 @@ public class PlantsFragment extends Fragment {
             plantViewModel.insert(newPlant);
             roomAdapter.notifyDataSetChanged();
         }
+
         return view;
     }
 
     private void BuildRecyclerView() {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        roomAdapter = new RoomAdapter();
+        roomAdapter = new RoomAdapter(new PlantAdapter.ItemClickListener() {
+            @Override
+            public void onItemClick(Plant plant, View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("plantObject", new Gson().toJson(plant));
+                Navigation.findNavController(view).navigate(R.id.plantViewFragment, bundle);
+            }
+
+            @Override
+            public void onDeleteClick(Plant plant) {
+                plantViewModel.delete(plant);
+            }
+        });
         recyclerView.setAdapter(roomAdapter);
     }
 

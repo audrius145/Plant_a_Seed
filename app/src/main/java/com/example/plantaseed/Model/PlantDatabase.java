@@ -11,7 +11,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Plant.class, com.example.plantaseed.Model.Room.class}, version = 6, exportSchema = false)
+@Database(entities = {Plant.class, com.example.plantaseed.Model.Room.class}, version = 7, exportSchema = false)
 public abstract class PlantDatabase extends RoomDatabase {
     private static PlantDatabase instance;
 
@@ -27,12 +27,14 @@ public abstract class PlantDatabase extends RoomDatabase {
                         @Override
                         public void onCreate(@NonNull SupportSQLiteDatabase db) {
                             super.onCreate(db);
-                            Executors.newSingleThreadScheduledExecutor().execute(() -> getInstance(context).plantDAO().insert(new Plant("", "", "", "")));
+                            Executors.newSingleThreadScheduledExecutor().execute(() -> getInstance(context).roomDAO().insert(new com.example.plantaseed.Model.Room("Roomless")));
                         }
                     }).build();
 
 
         }
+
+
     return instance;
     }
 

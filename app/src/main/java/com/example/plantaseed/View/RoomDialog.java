@@ -29,17 +29,11 @@ public class RoomDialog extends AppCompatDialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view  = inflater.inflate(R.layout.layout_roomdialog, null);
-        builder.setView(view).setTitle("New Room").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        builder.setView(view).setTitle("New Room").setNegativeButton("Cancel", (dialog, which) -> {
 
-            }
-        }).setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String roomName = nameOfRoom.getText().toString();
-                roomViewModel.insert(new Room(roomName));
-            }
+        }).setPositiveButton("Ok", (dialog, which) -> {
+            String roomName = nameOfRoom.getText().toString();
+            roomViewModel.insert(new Room(roomName));
         });
         nameOfRoom = view.findViewById(R.id.room_name);
         return builder.create();
