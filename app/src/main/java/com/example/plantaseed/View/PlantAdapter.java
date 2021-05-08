@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -46,6 +48,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
         holder.plantName.setText(plants.get(position).getName());
         holder.plantDescription.setText(plants.get(position).getDescription());
         if(plants.get(position).getImageURI().equals(""))
@@ -55,7 +58,6 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
         else{
             Glide.with(holder.plantImageView).load(plants.get(position).getImageURI()).into(holder.plantImageView);
         }
-
 
 
     }
@@ -68,9 +70,10 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
 
 
 
+
     public interface ItemClickListener{
         void onItemClick(Plant plant, View view);
-        void onDeleteClick(Plant plant);
+        void onDeleteClick(Plant plant, int position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -86,12 +89,9 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
             this.plantName = itemView.findViewById(R.id.plantName);
             this.plantDescription = itemView.findViewById(R.id.plantDescription);
             this.deletePlant = (ImageButton) itemView.findViewById(R.id.deletePlant);
-            deletePlant.setOnClickListener(v -> {
-                clickListener.onDeleteClick(plants.get(getAbsoluteAdapterPosition()));
-            });
-            itemView.setOnClickListener(v -> {
-                clickListener.onItemClick(plants.get(getAbsoluteAdapterPosition()),v);
-            });
+            deletePlant.setOnClickListener(v -> clickListener.onDeleteClick(plants.get(getAbsoluteAdapterPosition()), getAbsoluteAdapterPosition()));
+            itemView.setOnClickListener(v -> clickListener.onItemClick(plants.get(getAbsoluteAdapterPosition()),v));
+
         }
 
     }

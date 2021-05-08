@@ -5,13 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#f3f3f3"
+        app:cardBackgroundColor="@color/greenvar1"
         app:cardElevation="8dp"
-        android:layout_margin="12dp">
-        <LinearLayout
+        android:layout_margin="12dp"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/black"
+        >
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
@@ -22,12 +25,23 @@
                 android:layout_height="wrap_content"
                 android:padding="12sp"
                 android:textSize="18sp"
-                android:text="Item Title"/>
+                android:text="Item Title"
+                android:fontFamily="sans-serif-condensed-medium"/>
+            <ImageButton
+                android:id="@+id/deleteRoom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_remove_button_svgrepo_com"
+                android:background="#0000"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true" />
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/room"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/roomTitle"
+               />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

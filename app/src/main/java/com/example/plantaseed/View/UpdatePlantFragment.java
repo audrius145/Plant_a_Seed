@@ -71,20 +71,23 @@ public class UpdatePlantFragment extends Fragment {
         });
 
 
+
         if (getArguments() != null && getArguments().containsKey("plantObject")) {
             plantJSON = getArguments().getString("plantObject");
             updatePlant = new Gson().fromJson(plantJSON, Plant.class);
             plantName.setText(updatePlant.getName());
             plantDesc.setText(updatePlant.getDescription());
-            scientificName.setText(updatePlant.getDescription());
+            scientificName.setText(updatePlant.getScientificName());
         }
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
                 updatePlant.setId_fkRoom(((Room)parent.getSelectedItem()).getRoomId());
             }
             public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
+        spinner.setSelection(updatePlant.getId_fkRoom());
 
         button.setOnClickListener(v -> {
 
@@ -92,9 +95,10 @@ public class UpdatePlantFragment extends Fragment {
             updatePlant.setName(plantName.getText().toString());
             updatePlant.setScientificName(scientificName.getText().toString());
             plantViewModel.update(updatePlant);
+
             Bundle bundle = new Bundle();
             bundle.putString("plantObject", new Gson().toJson(updatePlant));
-            Navigation.findNavController(view).navigate(R.id.plantViewFragment, bundle);
+            Navigation.findNavController(view).navigate(R.id.plantViewFragment,bundle);
 
         });
 

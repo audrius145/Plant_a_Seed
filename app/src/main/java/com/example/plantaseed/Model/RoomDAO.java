@@ -37,5 +37,9 @@ public interface RoomDAO {
     LiveData<List<RoomWithPlants>> getRoomsWithPlants();
 
 
+    @Query("SELECT COUNT(*) FROM table_room")
+    LiveData<Integer> getRoomCount();
+
+
 
 }

@@ -22,14 +22,18 @@ public class RoomRepository {
     private RoomDAO roomDAO;
     private LiveData<List<RoomWithPlants>> allRooms;
     private LiveData<List<Room>> allRealRooms;
+    private LiveData<Integer> roomCount;
     private Executor executorService;
     private Handler mainThreadHandler;
+
 
     public RoomRepository(Application application) {
         PlantDatabase database = PlantDatabase.getInstance(application);
         roomDAO = database.roomDAO();
         allRooms = roomDAO.getRoomsWithPlants();
         allRealRooms = roomDAO.getAllRooms();
+        roomCount = roomDAO.getRoomCount();
+
         executorService = Executors.newFixedThreadPool(2);
         mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     }
@@ -50,6 +54,10 @@ public class RoomRepository {
         return roomDAO.findById(id);
     }
 
+    LiveData<Integer> getRoomCount() {
+        return roomCount;
+    }
+
     public LiveData<List<RoomWithPlants>> getAllRoomsWithPlants() {
         return allRooms;
     }
@@ -57,6 +65,8 @@ public class RoomRepository {
     public LiveData<List<Room>> getAllRooms() {
         return allRealRooms;
     }
+
+
 
 
 }

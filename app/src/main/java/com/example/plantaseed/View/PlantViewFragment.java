@@ -36,7 +36,7 @@ public class PlantViewFragment extends Fragment {
 
     Plant viewPlant;
 
-    RoomViewModel viewModel;
+
     public PlantViewFragment() {
         // Required empty public constructor
     }
@@ -52,7 +52,6 @@ public class PlantViewFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plant_view, container, false);
-        viewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(RoomViewModel.class);
 
         plantName = view.findViewById(R.id.pname);
         plantDesc = view.findViewById(R.id.pdesc);
@@ -67,8 +66,7 @@ public class PlantViewFragment extends Fragment {
             plantName.setText(viewPlant.getName());
             plantDesc.setText(viewPlant.getDescription());
             plantIMG.setImageURI(Uri.parse(viewPlant.getImageURI()));
-            scientificName.setText(viewPlant.getDescription());
-
+            scientificName.setText(viewPlant.getScientificName());
         }
 
         updatePlant.setOnClickListener(v -> {

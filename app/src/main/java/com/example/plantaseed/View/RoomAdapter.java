@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,10 +30,12 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
     private List<RoomWithPlants> roomList = new ArrayList<>();
     private PlantAdapter.ItemClickListener listener;
+    private ItemClickListener itemClickListener;
 
-    public RoomAdapter(PlantAdapter.ItemClickListener listener)
+    public RoomAdapter(PlantAdapter.ItemClickListener listener, ItemClickListener clickListener)
     {
         this.listener = listener;
+        this.itemClickListener = clickListener;
     }
     @NonNull
     @Override
@@ -45,7 +48,10 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         RoomWithPlants room = roomList.get(position);
         holder.roomTitle.setText(room.getRoom().getRoomName());
-
+        if(room.room.getRoomId() == 1)
+        {
+            holder.deleteRoom.setVisibility(View.GONE);
+        }
         // Create layout manager with initial prefetch item count
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 holder.room.getContext(),
@@ -62,8 +68,8 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
             }
 
             @Override
-            public void onDeleteClick(Plant plant) {
-                listener.onDeleteClick(plant);
+            public void onDeleteClick(Plant plant, int position) {
+                listener.onDeleteClick(plant, position);
             }
         });
 
@@ -72,6 +78,9 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         holder.room.setRecycledViewPool(viewPool);
     }
 
+    public interface ItemClickListener{
+        void onDeleteClick(RoomWithPlants room);
+    }
 
     @Override
     public int getItemCount() {
@@ -87,11 +96,16 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     class RoomViewHolder extends RecyclerView.ViewHolder {
         private TextView roomTitle;
         private RecyclerView room;
+        private ImageButton deleteRoom;
+
 
         RoomViewHolder(View itemView) {
             super(itemView);
             roomTitle = itemView.findViewById(R.id.roomTitle);
             room = itemView.findViewById(R.id.room);
+            deleteRoom = itemView.findViewById(R.id.deleteRoom);
+            deleteRoom.setOnClickListener(v -> itemClickListener.onDeleteClick(roomList.get(getAbsoluteAdapterPosition())));
+
         }
     }
 }

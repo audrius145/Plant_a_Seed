@@ -17,8 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.plantaseed.Model.Plant;
+import com.example.plantaseed.Model.Room;
+import com.example.plantaseed.Model.RoomWithPlants;
 import com.example.plantaseed.R;
 
 import com.example.plantaseed.ViewModel.PlantViewModel;
@@ -26,10 +29,13 @@ import com.example.plantaseed.ViewModel.RoomViewModel;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import java.util.List;
+
 
 public class PlantsFragment extends Fragment {
     private RoomViewModel roomViewModel;
     private PlantViewModel plantViewModel;
+
 
 
     RecyclerView recyclerView;
@@ -60,6 +66,7 @@ public class PlantsFragment extends Fragment {
             roomAdapter.notifyDataSetChanged();
         }
 
+
         return view;
     }
 
@@ -75,9 +82,19 @@ public class PlantsFragment extends Fragment {
             }
 
             @Override
-            public void onDeleteClick(Plant plant) {
+            public void onDeleteClick(Plant plant, int position) {
                 plantViewModel.delete(plant);
+                roomAdapter.notifyItemRemoved(position);
             }
+        }, room -> {
+            List<Plant> plants = room.plants;
+            for(Plant plant : plants)
+            {
+                plant.setId_fkRoom(1);
+                plantViewModel.update(plant);
+            }
+            roomViewModel.delete(room.room);
+            roomAdapter.notifyDataSetChanged();
         });
         recyclerView.setAdapter(roomAdapter);
     }

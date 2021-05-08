@@ -16,11 +16,13 @@ public class RoomViewModel extends AndroidViewModel {
     RoomRepository repository;
     private LiveData<List<RoomWithPlants>> allRooms;
     private LiveData<List<Room>> allRealRooms;
+    private LiveData<Integer> roomCount;
     public RoomViewModel(@NonNull Application application) {
         super(application);
         repository = new RoomRepository(application);
         allRooms = repository.getAllRoomsWithPlants();
         allRealRooms = repository.getAllRooms();
+        roomCount = repository.getRoomCount();
     }
 
     public void insert(Room room)
@@ -43,7 +45,9 @@ public class RoomViewModel extends AndroidViewModel {
         return repository.findById(id);
     }
 
-
+    public LiveData<Integer> getRoomCount(){
+        return roomCount;
+    }
     public LiveData<List<RoomWithPlants>> getAllRoomsWithPlants()
     {
         return allRooms;
