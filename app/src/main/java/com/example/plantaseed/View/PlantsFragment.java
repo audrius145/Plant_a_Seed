@@ -36,8 +36,6 @@ public class PlantsFragment extends Fragment {
     private RoomViewModel roomViewModel;
     private PlantViewModel plantViewModel;
 
-
-
     RecyclerView recyclerView;
     RoomAdapter roomAdapter;
     FloatingActionButton plantFab;

@@ -134,8 +134,7 @@ public class NewItemFragment extends Fragment {
 
     public Room getSelectedRoom(View view)
     {
-        Room room = (Room) spinner.getSelectedItem();
-        return room;
+        return (Room) spinner.getSelectedItem();
     }
 
 

@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import java.util.List;
@@ -27,4 +28,12 @@ public interface PlantDAO {
 
     @Query("SELECT * FROM plant_table")
     LiveData<List<Plant>> getAllPlants();
+
+    @Transaction
+    @Query("SELECT * FROM plant_table")
+    LiveData<List<PlantWithPhotos>> getPlantsWithPhotos();
+
+    @Transaction
+    @Query("SELECT * FROM plant_table WHERE plantId = :id")
+    LiveData<PlantWithPhotos> getPlantWithPhotos(int id);
 }

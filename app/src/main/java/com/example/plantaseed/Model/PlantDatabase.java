@@ -11,12 +11,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Plant.class, com.example.plantaseed.Model.Room.class}, version = 7, exportSchema = false)
+@Database(entities = {Plant.class, com.example.plantaseed.Model.Room.class, Photo.class}, version = 1, exportSchema = false)
 public abstract class PlantDatabase extends RoomDatabase {
     private static PlantDatabase instance;
 
     public abstract PlantDAO plantDAO();
     public abstract RoomDAO roomDAO();
+    public abstract PhotoDAO photoDAO();
 
     public static synchronized PlantDatabase getInstance(Context context){
         if (instance == null){
