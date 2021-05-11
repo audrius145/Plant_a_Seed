@@ -127,7 +127,7 @@ public class PlantViewFragment extends Fragment {
     private void BuildRecyclerView()
     {
         recyclerView.hasFixedSize();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         photoAdapter = new PhotoAdapter();

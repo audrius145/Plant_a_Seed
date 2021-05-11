@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "plant_table")
@@ -83,4 +85,7 @@ public class Plant {
     public void setImageURI(String imageURI) {
         this.imageURI = imageURI;
     }
+
+
+
 }

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
     List<PlantWithPhotos> plants = new ArrayList<>();
-    int size;
+
 
     @NonNull
     @Override
@@ -34,13 +34,14 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull PhotoAdapter.ViewHolder holder, int position) {
         PlantWithPhotos plant = plants.get(position);
+        if(plant.photos.size() != 0)
         Glide.with(holder.plantPhoto).load(plant.photos.get(position).getPhotoPath()).into(holder.plantPhoto);
-        size = plant.photos.size();
+
     }
 
     @Override
     public int getItemCount() {
-        return size;
+        return plants.size();
     }
 
     public void setPhotos(List<PlantWithPhotos> plants)
