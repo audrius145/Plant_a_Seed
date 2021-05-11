@@ -33,7 +33,5 @@ public interface PlantDAO {
     @Query("SELECT * FROM plant_table")
     LiveData<List<PlantWithPhotos>> getPlantsWithPhotos();
 
-    @Transaction
-    @Query("SELECT * FROM plant_table WHERE plantId = :id")
-    LiveData<PlantWithPhotos> getPlantWithPhotos(int id);
+
 }

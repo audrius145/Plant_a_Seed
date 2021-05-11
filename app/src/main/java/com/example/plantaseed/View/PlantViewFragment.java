@@ -64,8 +64,8 @@ public class PlantViewFragment extends Fragment {
     PhotoViewModel photoViewModel;
     Plant viewPlant;
     Bitmap bitmap;
-
-
+    List<Photo> allPhotos;
+    List<Photo> plantPhotos;
 
 
 
@@ -82,6 +82,16 @@ public class PlantViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_plant_view, container, false);
         plantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PlantViewModel.class);
         photoViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PhotoViewModel.class);
+        photoViewModel.getAllPhotos().observe(getViewLifecycleOwner(),photos -> allPhotos = photos);
+
+
+        for (Photo photo: allPhotos
+        ) {
+            if(photo.getPhotoId() == viewPlant.getPlantId())
+            {
+                plantPhotos.add(photo);
+            }
+        }
 
         plantName = view.findViewById(R.id.pname);
         plantDesc = view.findViewById(R.id.pdesc);
@@ -118,8 +128,7 @@ public class PlantViewFragment extends Fragment {
             }
         });
 
-        plantViewModel.getPlantsWithPhotos().observe(getViewLifecycleOwner(), plants ->
-                photoAdapter.setPhotos(plants));
+
 
 
         return view;
@@ -130,7 +139,7 @@ public class PlantViewFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        photoAdapter = new PhotoAdapter();
+        photoAdapter = new PhotoAdapter(plantPhotos);
         recyclerView.setAdapter(photoAdapter);
 
     }
@@ -184,5 +193,6 @@ public class PlantViewFragment extends Fragment {
         photo.setId_fkPlant(viewPlant.getPlantId());
         photoViewModel.insert(photo);
     }
+
 
 }
