@@ -30,6 +30,7 @@ public class PhotoRepository {
         photoDAO = database.photoDAO();
 
         allPhotos = photoDAO.getAllPhotos();
+
         executorService = Executors.newFixedThreadPool(2);
         mainThreadHandler = HandlerCompat.createAsync(Looper.getMainLooper());
     }
@@ -53,5 +54,9 @@ public class PhotoRepository {
         return allPhotos;
     }
 
+    public LiveData<List<Photo>> getAllPhotosById(int id)
+    {
+        return photoDAO.getAllPhotosById(id);
+    }
 
 }

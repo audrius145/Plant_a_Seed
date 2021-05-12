@@ -25,4 +25,7 @@ public interface PhotoDAO {
 
     @Query("SELECT * FROM photo_table")
     LiveData<List<Photo>> getAllPhotos();
+
+    @Query("SELECT * FROM photo_table WHERE id_fkPlant =:id")
+    LiveData<List<Photo>> getAllPhotosById(int id);
 }

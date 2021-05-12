@@ -43,4 +43,8 @@ public class PhotoViewModel extends AndroidViewModel {
         return allPhotos;
     }
 
+    public LiveData<List<Photo>> getAllPhotosById(int id)
+    {
+        return repository.getAllPhotosById(id);
+    }
 }

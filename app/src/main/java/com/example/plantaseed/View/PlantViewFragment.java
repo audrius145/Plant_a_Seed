@@ -65,8 +65,6 @@ public class PlantViewFragment extends Fragment {
     PhotoViewModel photoViewModel;
     Plant viewPlant;
     Bitmap bitmap;
-    List<Photo> allPhotos = new ArrayList<>();
-    List<Photo> plantPhotos = new ArrayList<>();
 
 
 
@@ -82,21 +80,7 @@ public class PlantViewFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plant_view, container, false);
         plantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PlantViewModel.class);
-        photoViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PhotoViewModel.class);
-        photoViewModel.getAllPhotos().observe(getViewLifecycleOwner(),photos -> {
-                    allPhotos = photos;
-            for (Photo photo: allPhotos
-            ) {
-                if(photo.getPhotoId() == viewPlant.getPlantId())
-                {
-                    plantPhotos.add(photo);
-                }
-            }
-            photoAdapter.setPhotos(plantPhotos);
-                }
-
-
-        );
+        photoViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PhotoViewModel.class);
 
 
         plantName = view.findViewById(R.id.pname);
@@ -117,6 +101,9 @@ public class PlantViewFragment extends Fragment {
             plantIMG.setImageURI(Uri.parse(viewPlant.getImageURI()));
             scientificName.setText(viewPlant.getScientificName());
         }
+        photoViewModel.getAllPhotosById(viewPlant.getPlantId()).observe(getViewLifecycleOwner(), photos -> photoAdapter.setPhotos(photos)
+        );
+
 
         updatePlant.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
@@ -135,14 +122,12 @@ public class PlantViewFragment extends Fragment {
         });
 
 
-
-
         return view;
     }
-    private void BuildRecyclerView()
-    {
+
+    private void BuildRecyclerView() {
         recyclerView.hasFixedSize();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         photoAdapter = new PhotoAdapter();
         recyclerView.setAdapter(photoAdapter);
