@@ -20,12 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
-    List<Photo> photosList;
+    List<Photo> photosList = new ArrayList<>();
 
-    public PhotoAdapter(List<Photo> photos)
-    {
-        photosList = photos;
-    }
+
 
     @NonNull
     @Override
@@ -37,9 +34,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull PhotoAdapter.ViewHolder holder, int position) {
-        Photo photo = photosList.get(position);
 
-        Glide.with(holder.plantPhoto).load(photo.getPhotoPath()).into(holder.plantPhoto);
+        Glide.with(holder.plantPhoto).load(photosList.get(position).getPhotoPath()).into(holder.plantPhoto);
 
     }
 
@@ -47,8 +43,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
     public int getItemCount() {
         return photosList.size();
     }
-
-
+    public void setPhotos(List<Photo> photos)
+    {
+        this.photosList = photos;
+        notifyDataSetChanged();
+    }
     public  class ViewHolder extends RecyclerView.ViewHolder{
 
 

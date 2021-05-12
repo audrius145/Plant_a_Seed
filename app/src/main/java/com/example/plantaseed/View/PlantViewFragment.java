@@ -44,6 +44,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -64,8 +65,8 @@ public class PlantViewFragment extends Fragment {
     PhotoViewModel photoViewModel;
     Plant viewPlant;
     Bitmap bitmap;
-    List<Photo> allPhotos;
-    List<Photo> plantPhotos;
+    List<Photo> allPhotos = new ArrayList<>();
+    List<Photo> plantPhotos = new ArrayList<>();
 
 
 
@@ -82,16 +83,21 @@ public class PlantViewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_plant_view, container, false);
         plantViewModel = new ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PlantViewModel.class);
         photoViewModel = new ViewModelProvider(this,ViewModelProvider.AndroidViewModelFactory.getInstance(getActivity().getApplication())).get(PhotoViewModel.class);
-        photoViewModel.getAllPhotos().observe(getViewLifecycleOwner(),photos -> allPhotos = photos);
-
-
-        for (Photo photo: allPhotos
-        ) {
-            if(photo.getPhotoId() == viewPlant.getPlantId())
-            {
-                plantPhotos.add(photo);
+        photoViewModel.getAllPhotos().observe(getViewLifecycleOwner(),photos -> {
+                    allPhotos = photos;
+            for (Photo photo: allPhotos
+            ) {
+                if(photo.getPhotoId() == viewPlant.getPlantId())
+                {
+                    plantPhotos.add(photo);
+                }
             }
-        }
+            photoAdapter.setPhotos(plantPhotos);
+                }
+
+
+        );
+
 
         plantName = view.findViewById(R.id.pname);
         plantDesc = view.findViewById(R.id.pdesc);
@@ -138,8 +144,7 @@ public class PlantViewFragment extends Fragment {
         recyclerView.hasFixedSize();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        photoAdapter = new PhotoAdapter(plantPhotos);
+        photoAdapter = new PhotoAdapter();
         recyclerView.setAdapter(photoAdapter);
 
     }
@@ -148,7 +153,6 @@ public class PlantViewFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             bitmap = (Bitmap) data.getExtras().get("data");
-
             dispatchCreate();
         }
     }
@@ -160,7 +164,7 @@ public class PlantViewFragment extends Fragment {
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
-                ".png",         /* suffix */
+                ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
 
