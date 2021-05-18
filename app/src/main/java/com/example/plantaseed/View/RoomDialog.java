@@ -2,7 +2,7 @@ package com.example.plantaseed.View;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.plantaseed.Model.Room;
 import com.example.plantaseed.R;
-import com.example.plantaseed.ViewModel.PlantViewModel;
+
 import com.example.plantaseed.ViewModel.RoomViewModel;
 
 public class RoomDialog extends AppCompatDialogFragment {

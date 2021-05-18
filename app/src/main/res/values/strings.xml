@@ -24,4 +24,10 @@
     <string name="welcome">Welcome!</string>
     <string name="description">Description</string>
     <string name="remove_plant">Remove Plant</string>
+    <string name="settings">Settings</string>
+    <string name="settings">Settings</string>
+    <string name="don_t_show_dialogue_warnings">Don\'t show dialogue warnings</string>
+    <string name="don_t_show_this_message_again">Don\'t show this message again</string>
+    <string name="the_photo_of_plants">the photo of plants</string>
+    <string name="delete_button_for_photo">delete button for photo</string>
 </resources>

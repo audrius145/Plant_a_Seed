@@ -3,8 +3,6 @@ package com.example.plantaseed.Model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.ArrayList;
-
 @Entity(tableName = "table_room")
 public class Room {
     @PrimaryKey(autoGenerate = true)

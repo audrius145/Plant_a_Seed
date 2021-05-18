@@ -27,9 +27,6 @@ public interface RoomDAO {
     @Query("SELECT * FROM table_room WHERE roomId =:id")
     Room findById(int id);
 
-    @Query("DELETE FROM table_room")
-    void deleteAllRooms();
-
     @Query("SELECT * FROM table_room")
             LiveData<List<Room>> getAllRooms();
     @Transaction

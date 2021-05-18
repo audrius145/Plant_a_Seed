@@ -20,12 +20,6 @@ public interface PlantDAO {
     @Delete
     void delete(Plant plant);
 
-    @Query("SELECT * FROM plant_table WHERE id_fkRoom = :id")
-    LiveData<List<Plant>> getAllPlantsInRoom(int id);
-
-    @Query("DELETE FROM plant_table")
-    void deleteAllPlants();
-
     @Query("SELECT * FROM plant_table")
     LiveData<List<Plant>> getAllPlants();
 

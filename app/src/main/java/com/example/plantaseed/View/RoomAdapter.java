@@ -1,30 +1,27 @@
 package com.example.plantaseed.View;
 
-import android.os.Bundle;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plantaseed.Model.Plant;
-import com.example.plantaseed.Model.Room;
+
 import com.example.plantaseed.Model.RoomWithPlants;
 import com.example.plantaseed.R;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder> {
     private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
@@ -52,7 +49,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         {
             holder.deleteRoom.setVisibility(View.GONE);
         }
-        // Create layout manager with initial prefetch item count
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(
                 holder.room.getContext(),
                 LinearLayoutManager.VERTICAL,
@@ -60,7 +57,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
         );
         layoutManager.setInitialPrefetchItemCount(room.getPlants().size());
 
-        // Create sub item view adapter
+
         PlantAdapter plantAdapter = new PlantAdapter(room.getPlants(), new PlantAdapter.ItemClickListener() {
             @Override
             public void onItemClick(Plant plant, View view) {

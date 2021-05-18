@@ -1,12 +1,9 @@
 package com.example.plantaseed.View;
 
-import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.Model.Room;
 import com.example.plantaseed.R;
@@ -38,11 +32,6 @@ public class UpdatePlantFragment extends Fragment {
     Button button;
     RoomViewModel roomViewModel;
     PlantViewModel plantViewModel;
-    public UpdatePlantFragment() {
-        // Required empty public constructor
-    }
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

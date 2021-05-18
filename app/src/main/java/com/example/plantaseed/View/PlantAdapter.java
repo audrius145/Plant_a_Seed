@@ -1,29 +1,24 @@
 package com.example.plantaseed.View;
 
-import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
+
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.R;
-import com.example.plantaseed.ViewModel.PlantViewModel;
-import com.example.plantaseed.ViewModel.RoomViewModel;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> {
@@ -88,7 +83,7 @@ public class PlantAdapter extends RecyclerView.Adapter<PlantAdapter.ViewHolder> 
             this.plantImageView = itemView.findViewById(R.id.plantImage);
             this.plantName = itemView.findViewById(R.id.plantName);
             this.plantDescription = itemView.findViewById(R.id.plantDescription);
-            this.deletePlant = (ImageButton) itemView.findViewById(R.id.deletePlant);
+            this.deletePlant =  itemView.findViewById(R.id.deletePlant);
             deletePlant.setOnClickListener(v -> clickListener.onDeleteClick(plants.get(getAbsoluteAdapterPosition()), getAbsoluteAdapterPosition()));
             itemView.setOnClickListener(v -> clickListener.onItemClick(plants.get(getAbsoluteAdapterPosition()),v));
 

@@ -5,15 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.plantaseed.Model.Photo;
-import com.example.plantaseed.Model.PlantWithPhotos;
-import com.example.plantaseed.Model.RoomWithPlants;
+
 import com.example.plantaseed.R;
 
 import java.util.ArrayList;
@@ -21,7 +19,10 @@ import java.util.List;
 
 public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
     List<Photo> photosList = new ArrayList<>();
+    private ItemClickListener itemClickListener;
 
+    public PhotoAdapter(ItemClickListener itemClickListener)
+    {this.itemClickListener = itemClickListener;}
 
 
     @NonNull
@@ -48,15 +49,21 @@ public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> 
         this.photosList = photos;
         notifyDataSetChanged();
     }
+
+    public interface ItemClickListener{
+        void onDeleteClick(Photo photo, int position);
+    }
     public  class ViewHolder extends RecyclerView.ViewHolder{
 
 
-        ImageButton plantPhoto;
-
+        ImageView plantPhoto;
+        ImageButton deletePhoto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             this.plantPhoto = itemView.findViewById(R.id.photoID);
+            this.deletePhoto = itemView.findViewById(R.id.deletePhoto);
+            deletePhoto.setOnClickListener(v-> itemClickListener.onDeleteClick(photosList.get(getAbsoluteAdapterPosition()), getAbsoluteAdapterPosition()));
         }
 
     }

@@ -1,61 +1,55 @@
 package com.example.plantaseed.View;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
+
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
+
+
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
+
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
+
 
 import com.example.plantaseed.Model.Plant;
 import com.example.plantaseed.Model.Room;
 import com.example.plantaseed.R;
 import com.example.plantaseed.ViewModel.RoomViewModel;
-import com.google.android.material.navigation.NavigationView;
+
 import com.google.gson.Gson;
 
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.URI;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
-import timber.log.Timber;
 
 
 public class NewItemFragment extends Fragment {
@@ -73,9 +67,7 @@ public class NewItemFragment extends Fragment {
 
 
 
-    public NewItemFragment() {
-        // Required empty public constructor
-    }
+
 
 
     @Override
@@ -111,9 +103,7 @@ public class NewItemFragment extends Fragment {
                 startActivityForResult(intent, 100);
             }
         });
-        addButton.setOnClickListener(v -> {
-            dispatchCreate();
-        });
+        addButton.setOnClickListener(v -> dispatchCreate());
         roomViewModel.getAllRooms().observe(getViewLifecycleOwner(), rooms -> {
             adapter.clear();
             adapter.addAll(rooms);
@@ -139,7 +129,7 @@ public class NewItemFragment extends Fragment {
 
 
     private File createImageFile() throws IOException {
-        // Create an image file name
+
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -149,7 +139,6 @@ public class NewItemFragment extends Fragment {
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
@@ -172,17 +161,16 @@ public class NewItemFragment extends Fragment {
         try {
             photoFile = createImageFile();
             saveImage(photoFile);
-        } catch (IOException ex) {
+        } catch (IOException ignored) {
 
         }
 
         if (photoFile.length() == 0) {
             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), "");
-            plant.setId_fkRoom(getSelectedRoom(getView()).getRoomId());
         } else {
             plant = new Plant(plantName.getText().toString(), "", plantDescription.getText().toString(), currentPhotoPath);
-            plant.setId_fkRoom(getSelectedRoom(getView()).getRoomId());
         }
+        plant.setId_fkRoom(getSelectedRoom(getView()).getRoomId());
 
 
         Bundle bundle = new Bundle();

@@ -1,7 +1,10 @@
 package com.example.plantaseed.View;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -12,41 +15,43 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DefaultItemAnimator;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.MediaStore;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.CheckBox;
+
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.plantaseed.Model.Photo;
 import com.example.plantaseed.Model.Plant;
-import com.example.plantaseed.Model.PlantWithPhotos;
-import com.example.plantaseed.Model.Room;
+
 import com.example.plantaseed.R;
 import com.example.plantaseed.ViewModel.PhotoViewModel;
 import com.example.plantaseed.ViewModel.PlantViewModel;
-import com.example.plantaseed.ViewModel.RoomViewModel;
+
 import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+
 import java.util.Date;
-import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class PlantViewFragment extends Fragment {
@@ -129,7 +134,27 @@ public class PlantViewFragment extends Fragment {
         recyclerView.hasFixedSize();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        photoAdapter = new PhotoAdapter();
+        photoAdapter = new PhotoAdapter((photo, position) -> {
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        deletePhoto(photo,position);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            };
+
+            AlertDialog.Builder builder = buildDialog(dialogClickListener);
+            AlertDialog alertDialog = builder.create();
+            if(getDialogStatus()){
+                alertDialog.hide();
+                deletePhoto(photo,position);
+            }else{
+                alertDialog.show();
+            }
+        });
         recyclerView.setAdapter(photoAdapter);
 
     }
@@ -140,10 +165,11 @@ public class PlantViewFragment extends Fragment {
             bitmap = (Bitmap) data.getExtras().get("data");
             dispatchCreate();
         }
+
+
     }
 
     private File createImageFile() throws IOException {
-        // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -153,7 +179,6 @@ public class PlantViewFragment extends Fragment {
                 storageDir      /* directory */
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
     }
@@ -170,17 +195,49 @@ public class PlantViewFragment extends Fragment {
     }
 
     private void dispatchCreate() {
-        File photoFile = null;
+        File photoFile;
 
         try {
             photoFile = createImageFile();
             saveImage(photoFile);
-        } catch (IOException ex) {
+        } catch (IOException ignored) {
 
         }
         Photo photo = new Photo(currentPhotoPath);
         photo.setId_fkPlant(viewPlant.getPlantId());
         photoViewModel.insert(photo);
+    }
+
+    private void deletePhoto(Photo photo, int position)
+    {
+        photoViewModel.delete(photo);
+        photoAdapter.notifyItemRemoved(position);
+    }
+
+    public AlertDialog.Builder buildDialog(DialogInterface.OnClickListener clickListener)
+    {
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
+        View mView = getLayoutInflater().inflate(R.layout.check_dialog, null);
+        CheckBox mCheckBox = mView.findViewById(R.id.checkBox);
+        mBuilder.setTitle("You are deleting an item!");
+        mBuilder.setMessage("Are you sure?");
+        mBuilder.setView(mView);
+        mBuilder.setPositiveButton("Yes", clickListener);
+        mBuilder.setNegativeButton("No", clickListener);
+        mCheckBox.setOnCheckedChangeListener((compoundButton, b) -> storeDialogStatus(compoundButton.isChecked()));
+        return mBuilder;
+    }
+
+    private void storeDialogStatus(boolean isChecked){
+        SharedPreferences mSharedPreferences = getActivity().getSharedPreferences("CheckItem", MODE_PRIVATE);
+        SharedPreferences.Editor mEditor = mSharedPreferences.edit();
+        mEditor.putBoolean("item", isChecked);
+        mEditor.apply();
+    }
+
+    private boolean getDialogStatus(){
+        SharedPreferences mSharedPreferences = getActivity().getSharedPreferences("CheckItem", MODE_PRIVATE);
+        return mSharedPreferences.getBoolean("item", false);
     }
 
 

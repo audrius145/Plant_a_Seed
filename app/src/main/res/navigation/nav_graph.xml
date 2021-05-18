@@ -10,11 +10,6 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/infoFragment"
-        android:name="com.example.plantaseed.View.InfoFragment"
-        android:label="fragment_info"
-        tools:layout="@layout/fragment_info" />
-    <fragment
         android:id="@+id/plantsFragment"
         android:name="com.example.plantaseed.View.PlantsFragment"
         android:label="fragment_plants"
@@ -53,4 +48,9 @@
             android:id="@+id/action_updatePlantFragment_to_plantViewFragment"
             app:destination="@id/plantViewFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.plantaseed.View.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
