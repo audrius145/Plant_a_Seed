@@ -29,3 +29,8 @@ Could have:
 14. As a user I should be able to share my plants progress in other medias. ❌
 8. As a user I should be able to receive notifications whenever my plant needs to be watered again ❌
 
+Video link:
+https://www.youtube.com/watch?v=6Ym4L4GIzWQ
+
+
+P.S sorry for the very poor quality of the video, I couldn't make OBS work properly with scrcpy so I had to use a regular screen recorder from lenovo (which makes the voice  sound weird) and on top of that I was very anxious while making the video. 
